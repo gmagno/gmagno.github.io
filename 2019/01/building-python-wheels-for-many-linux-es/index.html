@@ -221,7 +221,7 @@ PyPI. This can be done with another tool, <code>twine</code>, as follows:</p>
 
 <p>Specifying a different repository can be handy, for instance the test.pypi repo
 <code>https://test.pypi.org/legacy/</code> can be used for testing purposes, this way you
-know you won&rsquo;t be poluting the main repository.
+know you won&rsquo;t be polluting the main repository.
 In order to upload your wheel to PyPI you need to be authenticated, if you do
 not specify the username and password either through flags or environment
 variables, you will be prompted by the tool which is an issue when automating
@@ -243,8 +243,8 @@ written in C++ with bindings to python, using
 <p>The project is hosted on github,
 <a href="https://github.com/gmagno/nb-cpp"><u>here</u></a>.</p>
 
-<p>It is not the aim of this post to elaborate on implementation of <code>nb-cpp</code> or how
-pybind11 works, that could be the subject of another post.</p>
+<p>It is not the aim of this post to elaborate on the implementation of <code>nb-cpp</code> or
+how pybind11 works, that could be the subject of another post.</p>
 
 <p><br /></p>
 
@@ -351,7 +351,7 @@ Installing collected packages: nb-cpp
 Successfully installed nb-cpp-0.0.8
 </code></pre>
 
-<p>Finally let&rsquo;s make run our lib and check that it runs as expected:</p>
+<p>Finally let&rsquo;s check our lib runs as expected:</p>
 
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -361,7 +361,7 @@ import nb_cpp
 ​
 def main<span class="o">()</span>:
     <span class="nv">hsv</span> <span class="o">=</span> nb_cpp.compute<span class="o">(</span>
-        <span class="nv">imw</span><span class="o">=</span><span class="m">128</span>, <span class="nv">imh</span><span class="o">=</span><span class="m">128</span>,
+        <span class="nv">imw</span><span class="o">=</span><span class="m">512</span>, <span class="nv">imh</span><span class="o">=</span><span class="m">512</span>,
         <span class="nv">coefs</span><span class="o">=</span>np.array<span class="o">([</span><span class="m">1</span>, <span class="m">0</span>, <span class="m">0</span>, <span class="m">0</span>, <span class="m">0</span>, <span class="m">0</span>, <span class="m">1</span><span class="o">]</span>, <span class="nv">dtype</span><span class="o">=</span>np.float<span class="o">)</span>,
         <span class="nv">crmin</span><span class="o">=</span>-5.0, <span class="nv">crmax</span><span class="o">=</span><span class="m">5</span>.0,
         <span class="nv">cimin</span><span class="o">=</span>-5.0, <span class="nv">cimax</span><span class="o">=</span><span class="m">5</span>.0,
