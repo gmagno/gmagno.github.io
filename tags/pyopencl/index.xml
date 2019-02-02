@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pyopencl on gmagno</title>
+    <link>https://gmagno.github.io/tags/pyopencl/</link>
+    <description>Recent content in Pyopencl on gmagno</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Sun, 27 Jan 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://gmagno.github.io/tags/pyopencl/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Building python wheels for many linux-es</title>
+      <link>https://gmagno.github.io/blog/on_building_linux_wheels/</link>
+      <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://gmagno.github.io/blog/on_building_linux_wheels/</guid>
+      <description>  Scale model of the Eiffel tower in Parc Mini-France    @jontoney
+  -- Have you ever tried to pip install pyopencl to immediately get a traceback&amp;hellip;
+Collecting pyopencl Downloading http://localhost:3141/root/pypi/+f/419/375fb794d97f9/pyopencl-2018.2.2.tar.gz (341kB) 100% |████████████████████████████████| 348kB 104.2MB/s Complete output from command python setup.py egg_info: --------------------------------------------------------------------------- Pybind11 is not installed. --------------------------------------------------------------------------- ... --------------------------------------------------------------------------- Mako is not installed. --------------------------------------------------------------------------- ... ImportError: No module named &amp;#39;numpy&amp;#39; ---------------------------------------- </description>
+    </item>
+    
+    <item>
+      <title>First steps with OpenCL</title>
+      <link>https://gmagno.github.io/blog/first/</link>
+      <pubDate>Sun, 02 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://gmagno.github.io/blog/first/</guid>
+      <description>Note: This article originally appeared in CodeRag.
+Gavin Belson’s name has long been synonymous with innovation—but beyond his work at Hooli, do we even know the man behind the rampant success? In a Code/Rag exclusive, Belson revealed to us 10 things about himself that aren’t common knowledge.
+ He’s a nature fanatic! “It’s important to me that Hooli has an effective recycling program, and a personal passion of mine is donating to elephant sanctuaries.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<meta name="description" content="gmagno&#39;s personal webpage">
+<meta name="keywords" content="goncalo,magno,developer,personal,blog">
+
+<base href="https://gmagno.github.io/">
+
+<title>gmagno</title>
+
+<meta name="generator" content="Hugo 0.53" />
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400|Roboto+Slab:400,700|Roboto:300,300i,400,400i,500,500i,700,700i">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<link rel="stylesheet" href="https://gmagno.github.io/css/main.css">
+
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+
+</head>
+<body lang="en-US">
+<div class="container">
+
+
+<header class="row text-left title">
+  <h1 class="title">Building python wheels for many linux-es</h1>
+</header>
+<section id="category-pane" class="row meta">
+  
+  <div class="col-md-12">
+    <h6 class="text-left meta">
+        PUBLISHED ON JAN 27, 2019 
+      
+      
+      
+      —
+      
+      
+      <a class="meta" href="/categories/python">PYTHON</a>
+      
+      
+      
+    </h6>
+  </div>
+  
+</section>
+<section id="content-pane" class="row">
+  <div class="col-md-12 text-justify content">
+    
+
+<p>Ever wondered how to build your python project and generate Linux binaries,
+<a href="https://www.python.org/dev/peps/pep-0427/"><u>wheels,</u></a>
+that can be pulled from PyPI and run on any linux? Keep reading, you
+will be walked through in this brief post.</p>
+
+<p><br /></p>
+
+<figure class="center">
+    <img src="/img/wheels_500w.jpg" width="100%"/> <figcaption>
+            <p>@jontoney</p>
+        </figcaption>
+</figure>
+
+
+<p><br /></p>
+
+<p>Packaging and distributing is certainly one crucial step in the process of
+creating an app/lib. This is the moment you expose your app to the world,
+hopefully in a way that people can easily install.
+However, python is not known for its reputation with packaging, specifically
+for Linux based platforms where glibc version may differ among distros and
+building portable binaries can be challenging. Effort to simplify this led to
+the
+<a href="https://github.com/pypa/manylinux"><u>manylinux</u></a>
+project and the
+<a href="https://www.python.org/dev/peps/pep-0513/"><u>PEP513</u></a>,
+which will be referred in the following sections.
+For now let&rsquo;s start with how the app/lib directory should be structured.</p>
+
+<h3 id="project-directory-structure">Project directory structure</h3>
+
+<p>The project directory should follow a standard structure. None of this is
+mandatory, but the aim of this post is to show something concrete that works.
+So this is the dir structure being followed:</p>
+
+<pre><code>proj-name/
+├─ proj_name/
+│  ├─ __init__.py
+│  ├─ proj_name.py
+│  ├─ foo.py
+│  ├─ bar.py
+│  ├─ ...
+│  └─ tests/
+│     └─ ...
+├─ setup.py
+└─ .git/
+</code></pre>
+
+<p>Essentially <code>proj-name/</code> can be whatever pleases you and potentially matches
+the name of the git repo. This is not relevant for the packaging though.</p>
+
+<p>On the other hand <code>proj_name</code> should match <code>name</code> specified in
+<code>setup.py::setup(name='proj_name')</code>. This is where all the source code will sit.
+It is worth noting that once the package is pushed to PyPI it will be
+installable with <code>pip install proj_name</code>.</p>
+
+<h3 id="setuptools-setup-py">Setuptools setup.py</h3>
+
+<p>To package our app/lib we start by populating the <code>setup.py</code> script that has the
+metadata which will be pushed to PyPI along with the actual binaries and also
+describes how to build eventual extensions. In this post an example of building
+a C++ extension, that uses pybind11, is shown.
+The script should call a <code>setup()</code> function which at the bare minimum passes
+the arguments <code>name</code>, <code>version</code> and <code>packages</code>. The first two are
+self-explanatory, and the latter is a list of module names that should be
+packaged. Instead of manually listing the modules, one can use the function
+<code>setuptools.findpackages</code> which will conveniently do exactly that.
+Follows an example of a <code>setup()</code> function with a few more arguments:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-py3" data-lang="py3"><span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;proj_name&#39;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.0.1&#39;</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="s1">&#39;author&#39;</span><span class="p">,</span>
+    <span class="n">author_email</span><span class="o">=</span><span class="s1">&#39;user@domain.com&#39;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;A short description of the app/lib&#39;</span><span class="p">,</span>
+    <span class="n">long_description</span><span class="o">=</span><span class="s1">&#39;A longer one&#39;</span><span class="p">,</span>
+    <span class="n">ext_modules</span><span class="o">=</span><span class="p">[</span><span class="n">CMakeExtension</span><span class="p">(</span><span class="s1">&#39;proj_name&#39;</span><span class="p">)],</span>
+    <span class="n">cmdclass</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">build_ext</span><span class="o">=</span><span class="n">CMakeBuild</span><span class="p">),</span>
+    <span class="n">packages</span><span class="o">=</span><span class="n">find_packages</span><span class="p">(),</span>
+    <span class="n">classifiers</span><span class="o">=</span><span class="p">[</span>
+        <span class="s1">&#39;Development Status :: 3 - Alpha&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Intended Audience :: Developers&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;License :: OSI Approved :: MIT License&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Topic :: Scientific/Engineering&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Programming Language :: Python :: 3&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">zip_safe</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span></code></pre></div>
+
+<h3 id="packaging">Packaging</h3>
+
+<p>The actual building and packaging is done with the command <code>pip wheel</code>:</p>
+
+<pre><code>pip wheel /dir/to/proj-name/ -w /dir/where/wheels/are/written/
+</code></pre>
+
+<p>which will generate a file with extension .whl, the so called binary or wheel,
+for example: <code>proj_name-0.0.1-cp35-cp35m-linux_x86_64.whl</code>.
+This is effectively a zip file with the python modules and built extensions.
+This package has a few problems though:</p>
+
+<ol>
+<li>If your linux glibc is not old enough, there is a good chance the wheels you
+are building won&rsquo;t run on distros with older glibc&rsquo;s,</li>
+<li>Similarly if the app/lib depends on external shared libraries, different
+linux distros might have versions of these shared libs that are incompatible
+with the one the project was built against,</li>
+<li>The file name has a tag, <code>linux_x86_64</code> (assuming a 64bits architecture),
+that PyPI rejects when trying to upload,</li>
+</ol>
+
+<p>The first issue can be sorted by running the building process in a linux distro
+with a relatively old glibc, e.g CentOS5. This can be done conveniently with a
+docker image, e.g: <code>quay.io/pypa/manylinux1_x86_64</code>. For details on this check
+the
+<a href="https://github.com/pypa/manylinux"><u>manylinux</u></a>
+project.</p>
+
+<p>To address the second and third issues mentioned above, a tool named
+<code>auditwheel</code> was created. This tool acts on a previously built wheel, and
+generates a new and self-contained one, with all external shared libs inside,
+and with its name appropriately tagged <code>manylinux1_x86_64</code>. Example of usage:</p>
+
+<pre><code>auditwheel repair /dir/where/wheel/was/created -w /dir/with/manylinux/wheel/
+</code></pre>
+
+<p>which would generate the new wheel:
+<code>proj_name-0.0.1-cp35-cp35m-manylinux1_x86_64.whl</code>.</p>
+
+<p>Finally, and to make the wheel available to public, we need to upload it to
+PyPI. This can be done with another tool, <code>twine</code>, as follows:</p>
+
+<pre><code>twine upload proj_name-0.0.1-cp35-cp35m-manylinux1_x86_64.whl
+</code></pre>
+
+<p>For additional flags I recommend reading twine
+<a href="https://twine.readthedocs.io/"><u>documentation</u></a>.</p>
+
+<p>I would highlight the following ones though:</p>
+
+<pre><code>--repository-url REPOSITORY_URL
+    The repository (package index) URL to upload the package to. This
+    overrides --repository. (Can also be set via TWINE_REPOSITORY_URL
+    environment variable.)
+-u USERNAME, --username USERNAME
+    The username to authenticate to the repository (package index) as.
+    (Can also be set via TWINE_USERNAME environment variable.)
+-p PASSWORD, --password PASSWORD
+    The password to authenticate to the repository (package index) with.
+    (Can also be set via TWINE_PASSWORD environment variable.)
+--skip-existing
+    Continue uploading files if one already exists. (Only valid when
+    uploading to PyPI. Other implementations may not support this.)
+</code></pre>
+
+<p>Specifying a different repository can be handy, for instance the test.pypi repo
+<code>https://test.pypi.org/legacy/</code> can be used for testing purposes, this way you
+know you won&rsquo;t be poluting the main repository.
+In order to upload your wheel to PyPI you need to be authenticated, if you do
+not specify the username and password either through flags or environment
+variables, you will be prompted by the tool which is an issue when automating
+this process.
+Finally if you try to upload the same version of a wheel more than once twine
+will fail with an error. To avoid it, you can set the flag <code>--skip-existing</code>.
+Once again this can be useful in an automated build.</p>
+
+<h3 id="example-newton-basins-c-pybind11-automated-with-travis-ci">Example: Newton Basins C++/Pybind11 automated with Travis-CI</h3>
+
+<p>Follows an example of a simple python lib, <code>nb-cpp</code> which stands for Newton
+Basins in C++, that implements the generation of
+<a href="https://en.wikipedia.org/wiki/Newton_fractal">
+    <u>Newton Fractals</u>
+</a>,
+written in C++ with bindings to python, using
+<a href="https://github.com/pybind/pybind11"><u>pybind11</u></a>.</p>
+
+<p>The project is hosted on github,
+<a href="https://github.com/gmagno/nb-cpp"><u>here</u></a>.</p>
+
+<p>It is not the aim of this post to elaborate on implementation of <code>nb-cpp</code> or how
+pybind11 works, that could be the subject of another post.</p>
+
+<p><br /></p>
+
+<h4 id="setup-py">setup.py</h4>
+
+<p>The setup.py is mainly the definition of a couple of classes that handle the
+cmake-ing and make-ing of the C++ project, and a setup() function whose purpose
+was mentioned above.</p>
+
+<p><br /></p>
+
+<h4 id="travis-yml">.travis.yml</h4>
+
+<p>If you are not familiar with Travis, please check their
+<a href="https://travis-ci.org/"><u>website</u></a>.
+In short Travis is a Continuous Integration service used to build and test
+software projects hosted at Github.</p>
+
+<p>The .travis.yml file defines a list of configurations and instructions that tell
+how the job is setup and run.
+Follows the .travis.yml we will be using:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">notifications<span class="p">:</span><span class="w">
+</span><span class="w">  </span>email<span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="w"></span>if<span class="p">:</span><span class="w"> </span>tag<span class="w"> </span>IS<span class="w"> </span>present<span class="w">
+</span><span class="w"></span>matrix<span class="p">:</span><span class="w">
+</span><span class="w">  </span>include<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>sudo<span class="p">:</span><span class="w"> </span>required<span class="w">
+</span><span class="w">    </span>services<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>docker<span class="w">
+</span><span class="w">    </span>env<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64<span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>sudo<span class="p">:</span><span class="w"> </span>required<span class="w">
+</span><span class="w">    </span>services<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>docker<span class="w">
+</span><span class="w">    </span>env<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>DOCKER_IMAGE=quay.io/pypa/manylinux1_i686<span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>PRE_CMD=linux32<span class="w">
+</span><span class="w"></span>install<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>docker<span class="w"> </span>pull<span class="w"> </span>$DOCKER_IMAGE<span class="w">
+</span><span class="w"></span>script<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span>`pwd`<span class="p">:</span>/io<span class="w"> </span>-e<span class="w"> </span>TWINE_USERNAME<span class="w"> </span>-e<span class="w"> </span>TWINE_PASSWORD<span class="w"> </span>$DOCKER_IMAGE<span class="w"> </span>$PRE_CMD<span class="w"> </span>/io/travis/build-wheels.sh<span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>ls<span class="w"> </span>wheelhouse/</code></pre></div>
+
+<p>I would highlight the <code>matrix</code> field which allows us to run two instances of the
+job in parallel, one for i686 builds and the other for x86_64.
+Each job will spawn a docker container of a
+<a href="https://github.com/pypa/manylinux/tree/master/docker">
+    <u>modified image</u>
+</a>
+of a CentOS5 that will run the <code>build-wheels.sh</code> script which will do the actual
+building and push the wheels to PyPI:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
+</span><span class="cp"></span><span class="nb">set</span> -e -x
+
+<span class="nb">export</span> <span class="nv">PYHOME</span><span class="o">=</span>/home
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">PYHOME</span><span class="si">}</span>
+
+/opt/python/cp37-cp37m/bin/pip install twine cmake
+ln -s /opt/python/cp37-cp37m/bin/cmake /usr/bin/cmake
+
+<span class="c1"># Compile wheels</span>
+<span class="k">for</span> PYBIN in /opt/python/cp3*/bin<span class="p">;</span> <span class="k">do</span>
+    <span class="s2">&#34;</span><span class="si">${</span><span class="nv">PYBIN</span><span class="si">}</span><span class="s2">/pip&#34;</span> wheel /io/ -w wheelhouse/
+    <span class="s2">&#34;</span><span class="si">${</span><span class="nv">PYBIN</span><span class="si">}</span><span class="s2">/python&#34;</span> /io/setup.py sdist -d /io/wheelhouse/
+<span class="k">done</span>
+
+<span class="c1"># Bundle external shared libraries into the wheels and fix naming</span>
+<span class="k">for</span> whl in wheelhouse/*.whl<span class="p">;</span> <span class="k">do</span>
+    auditwheel repair <span class="s2">&#34;</span><span class="nv">$whl</span><span class="s2">&#34;</span> -w /io/wheelhouse/
+<span class="k">done</span>
+
+<span class="c1"># Test</span>
+<span class="k">for</span> PYBIN in /opt/python/cp3*/bin/<span class="p">;</span> <span class="k">do</span>
+    <span class="s2">&#34;</span><span class="si">${</span><span class="nv">PYBIN</span><span class="si">}</span><span class="s2">/pip&#34;</span> install -r /io/requirements-test.txt
+    <span class="s2">&#34;</span><span class="si">${</span><span class="nv">PYBIN</span><span class="si">}</span><span class="s2">/pip&#34;</span> install --no-index -f /io/wheelhouse nb-cpp
+    <span class="o">(</span><span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$PYHOME</span><span class="s2">&#34;</span><span class="p">;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">PYBIN</span><span class="si">}</span><span class="s2">/pytest&#34;</span> /io/test/<span class="o">)</span>
+<span class="k">done</span>
+
+<span class="c1">#  Upload</span>
+<span class="k">for</span> WHEEL in /io/wheelhouse/nb_cpp*<span class="p">;</span> <span class="k">do</span>
+    /opt/python/cp37-cp37m/bin/twine upload <span class="se">\
+</span><span class="se"></span>        --skip-existing <span class="se">\
+</span><span class="se"></span>        -u <span class="s2">&#34;</span><span class="si">${</span><span class="nv">TWINE_USERNAME</span><span class="si">}</span><span class="s2">&#34;</span> -p <span class="s2">&#34;</span><span class="si">${</span><span class="nv">TWINE_PASSWORD</span><span class="si">}</span><span class="s2">&#34;</span> <span class="se">\
+</span><span class="se"></span>        <span class="s2">&#34;</span><span class="si">${</span><span class="nv">WHEEL</span><span class="si">}</span><span class="s2">&#34;</span>
+<span class="k">done</span></code></pre></div>
+
+<p>In other words, the script is building wheels for each python3.x version and
+generating an sdist archive with the source code and CMakeLists.txt. It runs
+<code>auditwheel repair</code> for the reasons mentioned in the previous sections, followed
+by a couple of tests to ensure the wheels work as expected.
+Then it uploads all the wheels and the sdist archive to PyPI, which are publicly
+available at the project
+<a href="https://pypi.org/project/nb-cpp/#files"><u>download files</u></a>
+page.</p>
+
+<p>And <code>pip install nb-cpp</code> will just work:</p>
+
+<pre><code>Collecting nb-cpp
+Downloading https://files.pythonhosted.org/packages/.../nb_cpp-0.0.8-cp35-cp35m-manylinux1_x86_64.whl (99kB)
+    100% |████████████████████████████████| 102kB 764kB/s
+Installing collected packages: nb-cpp
+Successfully installed nb-cpp-0.0.8
+</code></pre>
+
+<p>Finally let&rsquo;s make run our lib and check that it runs as expected:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">import matplotlib as mpl
+import matplotlib.pyplot as plt
+import numpy as np
+​
+import nb_cpp
+​
+def main<span class="o">()</span>:
+    <span class="nv">hsv</span> <span class="o">=</span> nb_cpp.compute<span class="o">(</span>
+        <span class="nv">imw</span><span class="o">=</span><span class="m">128</span>, <span class="nv">imh</span><span class="o">=</span><span class="m">128</span>,
+        <span class="nv">coefs</span><span class="o">=</span>np.array<span class="o">([</span><span class="m">1</span>, <span class="m">0</span>, <span class="m">0</span>, <span class="m">0</span>, <span class="m">0</span>, <span class="m">0</span>, <span class="m">1</span><span class="o">]</span>, <span class="nv">dtype</span><span class="o">=</span>np.float<span class="o">)</span>,
+        <span class="nv">crmin</span><span class="o">=</span>-5.0, <span class="nv">crmax</span><span class="o">=</span><span class="m">5</span>.0,
+        <span class="nv">cimin</span><span class="o">=</span>-5.0, <span class="nv">cimax</span><span class="o">=</span><span class="m">5</span>.0,
+        <span class="nv">itmax</span><span class="o">=</span><span class="m">30</span>, <span class="nv">tol</span><span class="o">=</span>1e-6
+    <span class="o">)</span>
+    <span class="nv">rgb</span> <span class="o">=</span> mpl.colors.hsv_to_rgb<span class="o">(</span>hsv<span class="o">)</span>
+    plt.figure<span class="o">(</span><span class="s1">&#39;Example: Newton Basins 6th order poly.&#39;</span><span class="o">)</span>
+    plt.imshow<span class="o">(</span>rgb<span class="o">)</span>
+    plt.show<span class="o">()</span>
+​
+<span class="k">if</span> <span class="nv">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span>:
+    main<span class="o">()</span></code></pre></div>
+
+<p><br /></p>
+
+<figure class="center">
+    <img src="/img/nb6.png" width="50%"/> 
+</figure>
+
+
+  </div>
+</section>
+<section id="tag-pane" class="row meta">
+  
+  <div class="col-md-12">
+    <h6 class="text-right meta">
+      
+      
+      
+      TAGS:
+      
+      
+      <a class="meta" href="/tags/c&#43;&#43;">C&#43;&#43;</a>, 
+      
+      <a class="meta" href="/tags/pybind11">PYBIND11</a>, 
+      
+      <a class="meta" href="/tags/python">PYTHON</a>, 
+      
+      <a class="meta" href="/tags/setuptools">SETUPTOOLS</a>, 
+      
+      <a class="meta" href="/tags/wheels">WHEELS</a>
+      
+      
+      
+    </h6>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+
+<section id="menu-pane" class="row menu text-center">
+  
+  
+  
+  
+  
+  <h4 class="text-center"><a class="menu-item" href="https://gmagno.github.io/">home</a></h4>
+</section>
+
+
+
+<footer class="row text-center footer">
+  <hr />
+  
+  <h6 class="text-center copyright">© 2019 Goncalo Magno</h6>
+  
+  
+</footer>
+
+</div>
+
+
+
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-132802693-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
+
+

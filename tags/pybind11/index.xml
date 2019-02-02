@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>gmagno</title>
-    <link>https://gmagno.github.io/</link>
-    <description>Recent content on gmagno</description>
+    <title>Pybind11 on gmagno</title>
+    <link>https://gmagno.github.io/tags/pybind11/</link>
+    <description>Recent content in Pybind11 on gmagno</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <lastBuildDate>Sun, 27 Jan 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://gmagno.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://gmagno.github.io/tags/pybind11/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -22,15 +22,6 @@
  @jontoney
   
 Packaging and distributing is certainly one crucial step in the process of creating an app/lib. This is the moment you expose your app to the world, hopefully in a way that people can easily install.</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>https://gmagno.github.io/about/</link>
-      <pubDate>Sun, 02 Oct 2016 00:00:00 +0000</pubDate>
-      
-      <guid>https://gmagno.github.io/about/</guid>
-      <description>I am a generalist software developer who, nowadays, mostly codes in Python. Before stepping into the office in the morning I will have done my daily 3 km swimming session.</description>
     </item>
     
   </channel>

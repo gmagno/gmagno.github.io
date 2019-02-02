@@ -20,5 +20,50 @@
       <description></description>
     </item>
     
+    <item>
+      <title>C&#43;&#43;</title>
+      <link>https://gmagno.github.io/tags/c&#43;&#43;/</link>
+      <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://gmagno.github.io/tags/c&#43;&#43;/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pybind11</title>
+      <link>https://gmagno.github.io/tags/pybind11/</link>
+      <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://gmagno.github.io/tags/pybind11/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>https://gmagno.github.io/tags/python/</link>
+      <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://gmagno.github.io/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Setuptools</title>
+      <link>https://gmagno.github.io/tags/setuptools/</link>
+      <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://gmagno.github.io/tags/setuptools/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Wheels</title>
+      <link>https://gmagno.github.io/tags/wheels/</link>
+      <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://gmagno.github.io/tags/wheels/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
