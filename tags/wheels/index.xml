@@ -17,7 +17,7 @@
       <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>https://gmagno.github.io/2019/01/building-python-wheels-for-many-linux-es/</guid>
-      <description>Ever wondered how to build your python project and generate Linux binaries, wheels, that can be pulled from PyPI and run on any linux? Keep reading, you will be walked through in this brief post.
+      <description>Ever wondered how to build your python project and generate Linux binaries, aka wheels, that can be pulled from PyPI and run on any linux? Keep reading, you will be walked through in this brief post.
 
  @jontoney
   
