@@ -13,10 +13,10 @@
     
     <item>
       <title>Quick setup of a proxyDHCP with dnsmasq and PXE boot</title>
-      <link>https://gmagno.github.io/gists/proxydhcp/</link>
+      <link>https://gmagno.github.io/2019/05/quick-setup-of-a-proxydhcp-with-dnsmasq-and-pxe-boot/</link>
       <pubDate>Sun, 26 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://gmagno.github.io/gists/proxydhcp/</guid>
+      <guid>https://gmagno.github.io/2019/05/quick-setup-of-a-proxydhcp-with-dnsmasq-and-pxe-boot/</guid>
       <description>How to netboot a device in a few simple steps.
 
  @aligns

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<meta name="description" content="gmagno&#39;s personal webpage">
+<meta name="keywords" content="goncalo,magno,developer,personal,blog">
+
+<base href="https://gmagno.github.io/">
+
+<title>gmagno</title>
+
+<meta name="generator" content="Hugo 0.53" />
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400|Roboto+Slab:400,700|Roboto:300,300i,400,400i,500,500i,700,700i">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<link rel="stylesheet" href="https://gmagno.github.io/css/main.css">
+
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+
+</head>
+<body lang="en-US">
+<div class="container">
+
+
+<header class="row text-left title">
+  <h1 class="title">Quick setup of a proxyDHCP with dnsmasq and PXE boot</h1>
+</header>
+<section id="category-pane" class="row meta">
+  
+  <div class="col-md-12">
+    <h6 class="text-left meta">
+        PUBLISHED ON MAY 26, 2019 
+      
+      
+      
+      —
+      
+      
+      <a class="meta" href="/categories/linux">LINUX</a>
+      
+      
+      
+    </h6>
+  </div>
+  
+</section>
+<section id="content-pane" class="row">
+  <div class="col-md-12 text-justify content">
+    
+
+<p>How to netboot a device in a few simple steps.</p>
+
+<p><br /></p>
+
+<figure class="center">
+    <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1650&amp;q=80" width="100%"/> <figcaption>
+            <p>@aligns</p>
+        </figcaption>
+</figure>
+
+
+<p><br /></p>
+
+<p>Since we will be relying on PXE, we need to ensure that our booting device has a network card that runs a PXE ROM, i.e it runs a firmware that implements some necessary internet protocols: UDP/IP, DHCP and TFTP.</p>
+
+<p>We then need a DHCP server that is capable of replying to our device with both:</p>
+
+<ol>
+<li>IP address, IP mask, etc</li>
+<li>a bootstrap program (the PXE part of things)</li>
+</ol>
+
+<p>Not every router or DHCP server allows configuring (2.) for different reasons. If that is the case we need to setup a proxyDHCP, and for that we will be using <code>dnsmasq</code>. How DHCP server along with the <code>dnsmasq</code> service will be able to provide both 1. and 2.</p>
+
+<h3 id="dnsmasq">dnsmasq</h3>
+
+<p>The <code>dnsmasq</code> service should be running on a machine sharing the network with the booting devices. It may be running in the host itself, in a virtual machine or even from a docker container, as long as it shares the same network as the devices. Two examples are addressed:</p>
+
+<ul>
+<li>Ubuntu 18.04 netboot</li>
+<li>XenServer from iso</li>
+</ul>
+
+<p>In the following examples the <code>dnsmasq</code> service will be running from inside a container and configuration passed by a volume mount. So, in short we need the following Dockerfile:</p>
+
+<pre><code class="language-Docker">FROM alpine:latest
+RUN apk --no-cache add dnsmasq
+WORKDIR /tftpboot
+CMD [&quot;dnsmasq&quot;, &quot;-d&quot;]
+</code></pre>
+
+<p>which can be built with:</p>
+
+<pre><code>docker build -f Dockerfile -t proxydhcp .
+</code></pre>
+
+<p>and run with:</p>
+
+<pre><code>docker run \
+  --rm -it \
+  --net=host \
+  --cap-add=NET_ADMIN \
+  -v ${PWD}/dnsmasq.conf:/etc/dnsmasq.conf \
+  -v ${PWD}/tftpboot:/tftpboot \
+  proxydhcp
+</code></pre>
+
+<blockquote>
+<p><strong><em>NOTE:</em></strong>  don&rsquo;t run yet, we need to configure <code>tftpboot/</code> directory, keep reading&hellip;</p>
+</blockquote>
+
+<p>a <code>dnsmasq.conf</code> file with the following content:</p>
+
+<pre><code>port=0
+log-dhcp
+dhcp-range=192.168.9.0,proxy
+dhcp-boot=pxelinux.0
+pxe-service=x86PC,'Network Boot',pxelinux
+enable-tftp
+tftp-root=/tftpboot
+</code></pre>
+
+<blockquote>
+<p><strong><em>NOTE:</em></strong>  <code>dhcp-range</code> should be set with the correct network address.</p>
+</blockquote>
+
+<p>and a directory named <code>tftpboot</code>:</p>
+
+<pre><code>mkdir -p tftpboot/
+</code></pre>
+
+<h3 id="ubuntu-18-04-netboot-example-config">Ubuntu 18.04 netboot example config</h3>
+
+<p>Download Ubuntu 18.04 netboot from here <a href="http://archive.ubuntu.com/ubuntu/dists/bionic-updates/main/installer-amd64/current/images/netboot/netboot.tar.gz">netboot_url</a>, and decompress it into <code>tftpboot/</code>:</p>
+
+<pre><code>cd tftpboot/
+wget http://archive.ubuntu.com/ubuntu/dists/bionic-updates/main/installer-amd64/current/images/netboot/netboot.tar.gz
+tar xf netboot.tar.gz &amp;&amp; rm netboot.tar.gz
+cd -
+</code></pre>
+
+<p><code>tftpboot/</code> should look like this:</p>
+
+<pre><code>tftpboot/
+├── ubuntu-installer/
+├── ldlinux.c32 -&gt; ubuntu-installer/amd64/boot-screens/ldlinux.c32
+├── pxelinux.0 -&gt; ubuntu-installer/amd64/pxelinux.0
+├── pxelinux.cfg -&gt; ubuntu-installer/amd64/pxelinux.cfg
+└── version.info
+</code></pre>
+
+<p>And we should now be able to run our docker container as mentioned above and boot the PXE ROM machine.</p>
+
+<h3 id="xenserver-iso-example-config">XenServer ISO example config</h3>
+
+<p>Download XenServer Free from <a href="https://xenserver.org">xenserver.org</a></p>
+
+<p>and then mount bind the iso file:</p>
+
+<pre><code>sudo mkdir -p /mnt/xeniso/
+sudo mount -o loop XenServer-7.6.0-install-cd.iso /mnt/xeniso/
+</code></pre>
+
+<p>Copy <code>mboot.c32</code>, <code>menu.c32</code> and <code>pxelinux.0</code> from inside <code>/mnt/xeniso/boot/pxelinux/</code> to <code>tftpboot/</code>:</p>
+
+<pre><code>cp /mnt/xeniso/boot/pxelinux/* tftpboot/
+</code></pre>
+
+<p>Create the directories <code>tftpboot/pxelinux.cfg/</code> and <code>tftpboot/xenserver/</code></p>
+
+<pre><code>mkdir -p tftpboot/pxelinux.cfg/
+mkdir -p tftpboot/xenserver/
+</code></pre>
+
+<p>and copy all the contents from <code>/mnt/xeniso/boot</code> to <code>tftpboot/xenserver/</code>:</p>
+
+<pre><code>cp /mnt/xeniso/boot/* tftpboot/xenserver/
+cp /mnt/xeniso/install.img tftpboot/xenserver/
+</code></pre>
+
+<p>and create the file <code>tftpboot/pxelinux.cfg/default</code> with content:</p>
+
+<pre><code>default xenserver
+label xenserver
+kernel mboot.c32
+    append /tftpboot/xenserver/xen.gz dom0_max_vcpus=2 dom0_mem=1024M,max:1024M com1=115200,8n1 console=com1,vga ---  /tftpboot/xenserver/vmlinuz xencons=hvc console=hvc0 console=tty0 ---  /tftpboot/xenserver/install.img
+</code></pre>
+
+<p>Finally expose <code>/mnt/xeniso</code> through http for instance by running:</p>
+
+<pre><code>cd /mnt/xeniso
+sudo python3 -m http.server 80
+</code></pre>
+
+<p>Run the container and boot the PXE device. Follow the installation and instructions and configure installation from http, pointing to the python http server setup above.</p>
+
+  </div>
+</section>
+<section id="tag-pane" class="row meta">
+  
+  <div class="col-md-12">
+    <h6 class="text-right meta">
+      
+      
+      
+      TAGS:
+      
+      
+      <a class="meta" href="/tags/dnsmasq">DNSMASQ</a>, 
+      
+      <a class="meta" href="/tags/docker">DOCKER</a>, 
+      
+      <a class="meta" href="/tags/linux">LINUX</a>, 
+      
+      <a class="meta" href="/tags/netboot">NETBOOT</a>, 
+      
+      <a class="meta" href="/tags/proxydhcp">PROXYDHCP</a>, 
+      
+      <a class="meta" href="/tags/pxe">PXE</a>
+      
+      
+      
+    </h6>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+
+<section id="menu-pane" class="row menu text-center">
+  
+  
+  <span><a class="menu-item" href="https://gmagno.github.io/2019/01/building-python-wheels-for-many-linux-es/">&lt; prev | </a></span>
+  
+  
+  <span><a class="menu-item" href="/gists">gists</a></span>
+  
+  
+  
+  <h4 class="text-center"><a class="menu-item" href="https://gmagno.github.io/">home</a></h4>
+</section>
+
+
+
+<footer class="row text-center footer">
+  <hr />
+  
+  <h6 class="text-center copyright">© 2019 Goncalo Magno</h6>
+  
+  
+</footer>
+
+</div>
+
+
+
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-132802693-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
+
+
