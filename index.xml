@@ -6,17 +6,31 @@
     <description>Recent content on gmagno</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 27 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 May 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://gmagno.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Quick setup of a proxyDHCP with dnsmasq and PXE boot</title>
+      <link>https://gmagno.github.io/gists/proxydhcp/</link>
+      <pubDate>Sun, 26 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://gmagno.github.io/gists/proxydhcp/</guid>
+      <description>How to netboot a device in a few simple steps.
+
+ @aligns
+  
+Since we will be relying on PXE, we need to ensure that our booting device has a network card that runs a PXE ROM, i.e it runs a firmware that implements some necessary internet protocols: UDP/IP, DHCP and TFTP.
+We then need a DHCP server that is capable of replying to our device with both:</description>
+    </item>
+    
+    <item>
       <title>Building python wheels for many linux-es</title>
-      <link>https://gmagno.github.io/2019/01/building-python-wheels-for-many-linux-es/</link>
+      <link>https://gmagno.github.io/gists/on_building_linux_wheels/</link>
       <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://gmagno.github.io/2019/01/building-python-wheels-for-many-linux-es/</guid>
+      <guid>https://gmagno.github.io/gists/on_building_linux_wheels/</guid>
       <description>Ever wondered how to build your python project and generate Linux binaries, aka wheels, that can be pulled from PyPI and run on any linux? Keep reading, you will be walked through in this brief post.
 
  @jontoney

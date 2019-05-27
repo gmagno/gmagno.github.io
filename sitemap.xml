@@ -3,7 +3,12 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://gmagno.github.io/2019/01/building-python-wheels-for-many-linux-es/</loc>
+    <loc>https://gmagno.github.io/gists/proxydhcp/</loc>
+    <lastmod>2019-05-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://gmagno.github.io/gists/on_building_linux_wheels/</loc>
     <lastmod>2019-01-27T00:00:00+00:00</lastmod>
   </url>
   
@@ -25,12 +30,6 @@
   </url>
   
   <url>
-    <loc>https://gmagno.github.io/blog/</loc>
-    <lastmod>2019-01-27T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://gmagno.github.io/tags/c&#43;&#43;/</loc>
     <lastmod>2019-01-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -39,6 +38,54 @@
   <url>
     <loc>https://gmagno.github.io/categories/</loc>
     <lastmod>2016-10-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gmagno.github.io/tags/dnsmasq/</loc>
+    <lastmod>2019-05-26T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gmagno.github.io/tags/docker/</loc>
+    <lastmod>2019-05-26T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gmagno.github.io/gists/</loc>
+    <lastmod>2019-05-26T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gmagno.github.io/tags/linux/</loc>
+    <lastmod>2019-05-26T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gmagno.github.io/categories/linux/</loc>
+    <lastmod>2019-05-26T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gmagno.github.io/tags/netboot/</loc>
+    <lastmod>2019-05-26T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gmagno.github.io/tags/proxydhcp/</loc>
+    <lastmod>2019-05-26T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gmagno.github.io/tags/pxe/</loc>
+    <lastmod>2019-05-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -80,7 +127,7 @@
   
   <url>
     <loc>https://gmagno.github.io/</loc>
-    <lastmod>2019-01-27T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

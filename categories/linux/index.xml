@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Docker on gmagno</title>
-    <link>https://gmagno.github.io/tags/docker/</link>
-    <description>Recent content in Docker on gmagno</description>
+    <title>Linux on gmagno</title>
+    <link>https://gmagno.github.io/categories/linux/</link>
+    <description>Recent content in Linux on gmagno</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <lastBuildDate>Sun, 26 May 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://gmagno.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://gmagno.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
