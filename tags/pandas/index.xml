@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pandas on gmagno</title>
+    <link>https://gmagno.github.io/tags/pandas/</link>
+    <description>Recent content in pandas on gmagno</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Sun, 03 Nov 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://gmagno.github.io/tags/pandas/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A quick look at fuel prices in Brazil</title>
+      <link>https://gmagno.github.io/2019/11/a-quick-look-at-fuel-prices-in-brazil/</link>
+      <pubDate>Sun, 03 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://gmagno.github.io/2019/11/a-quick-look-at-fuel-prices-in-brazil/</guid>
+      <description>On this post I share a link to a dashboard depicting the fuel prices thoughout the Brazil. The dataset used to generate the plots is provided by the brazillian government through ANP (Agência Nacional do Petróleo, Gás Natural e Biocombustíveis). Follows the link to the actual dashboard page: here.
+
+@jonathanborba
+   
+The dashboard is WIP and at the moment tries to address three questions:
+ How do fuel prices vary, in average, among distributors?</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on gmagno</title>
@@ -6,22 +6,40 @@
     <description>Recent content in Categories on gmagno</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 02 Oct 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 03 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://gmagno.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>About</title>
-      <link>https://gmagno.github.io/categories/about/</link>
-      <pubDate>Sun, 02 Oct 2016 00:00:00 +0000</pubDate>
+      <title>bokeh</title>
+      <link>https://gmagno.github.io/categories/bokeh/</link>
+      <pubDate>Sun, 03 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://gmagno.github.io/categories/about/</guid>
+      <guid>https://gmagno.github.io/categories/bokeh/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Linux</title>
+      <title>pandas</title>
+      <link>https://gmagno.github.io/categories/pandas/</link>
+      <pubDate>Sun, 03 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://gmagno.github.io/categories/pandas/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://gmagno.github.io/categories/python/</link>
+      <pubDate>Sun, 03 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://gmagno.github.io/categories/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
       <link>https://gmagno.github.io/categories/linux/</link>
       <pubDate>Sun, 26 May 2019 00:00:00 +0000</pubDate>
       
@@ -30,11 +48,11 @@
     </item>
     
     <item>
-      <title>Python</title>
-      <link>https://gmagno.github.io/categories/python/</link>
-      <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
+      <title>about</title>
+      <link>https://gmagno.github.io/categories/about/</link>
+      <pubDate>Sun, 02 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://gmagno.github.io/categories/python/</guid>
+      <guid>https://gmagno.github.io/categories/about/</guid>
       <description></description>
     </item>
     

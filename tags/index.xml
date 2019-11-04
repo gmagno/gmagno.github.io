@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on gmagno</title>
@@ -6,31 +6,40 @@
     <description>Recent content in Tags on gmagno</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 02 Oct 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 03 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://gmagno.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>About</title>
-      <link>https://gmagno.github.io/tags/about/</link>
-      <pubDate>Sun, 02 Oct 2016 00:00:00 +0000</pubDate>
+      <title>bokeh</title>
+      <link>https://gmagno.github.io/tags/bokeh/</link>
+      <pubDate>Sun, 03 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://gmagno.github.io/tags/about/</guid>
+      <guid>https://gmagno.github.io/tags/bokeh/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>C&#43;&#43;</title>
-      <link>https://gmagno.github.io/tags/c&#43;&#43;/</link>
-      <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
+      <title>pandas</title>
+      <link>https://gmagno.github.io/tags/pandas/</link>
+      <pubDate>Sun, 03 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://gmagno.github.io/tags/c&#43;&#43;/</guid>
+      <guid>https://gmagno.github.io/tags/pandas/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Dnsmasq</title>
+      <title>python</title>
+      <link>https://gmagno.github.io/tags/python/</link>
+      <pubDate>Sun, 03 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://gmagno.github.io/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>dnsmasq</title>
       <link>https://gmagno.github.io/tags/dnsmasq/</link>
       <pubDate>Sun, 26 May 2019 00:00:00 +0000</pubDate>
       
@@ -39,7 +48,7 @@
     </item>
     
     <item>
-      <title>Docker</title>
+      <title>docker</title>
       <link>https://gmagno.github.io/tags/docker/</link>
       <pubDate>Sun, 26 May 2019 00:00:00 +0000</pubDate>
       
@@ -48,7 +57,7 @@
     </item>
     
     <item>
-      <title>Linux</title>
+      <title>linux</title>
       <link>https://gmagno.github.io/tags/linux/</link>
       <pubDate>Sun, 26 May 2019 00:00:00 +0000</pubDate>
       
@@ -57,7 +66,7 @@
     </item>
     
     <item>
-      <title>Netboot</title>
+      <title>netboot</title>
       <link>https://gmagno.github.io/tags/netboot/</link>
       <pubDate>Sun, 26 May 2019 00:00:00 +0000</pubDate>
       
@@ -66,7 +75,7 @@
     </item>
     
     <item>
-      <title>Proxydhcp</title>
+      <title>proxyDHCP</title>
       <link>https://gmagno.github.io/tags/proxydhcp/</link>
       <pubDate>Sun, 26 May 2019 00:00:00 +0000</pubDate>
       
@@ -75,7 +84,7 @@
     </item>
     
     <item>
-      <title>Pxe</title>
+      <title>pxe</title>
       <link>https://gmagno.github.io/tags/pxe/</link>
       <pubDate>Sun, 26 May 2019 00:00:00 +0000</pubDate>
       
@@ -84,7 +93,16 @@
     </item>
     
     <item>
-      <title>Pybind11</title>
+      <title>c&#43;&#43;</title>
+      <link>https://gmagno.github.io/tags/c&#43;&#43;/</link>
+      <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://gmagno.github.io/tags/c&#43;&#43;/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pybind11</title>
       <link>https://gmagno.github.io/tags/pybind11/</link>
       <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
       
@@ -93,16 +111,7 @@
     </item>
     
     <item>
-      <title>Python</title>
-      <link>https://gmagno.github.io/tags/python/</link>
-      <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://gmagno.github.io/tags/python/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Setuptools</title>
+      <title>setuptools</title>
       <link>https://gmagno.github.io/tags/setuptools/</link>
       <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
       
@@ -111,11 +120,20 @@
     </item>
     
     <item>
-      <title>Wheels</title>
+      <title>wheels</title>
       <link>https://gmagno.github.io/tags/wheels/</link>
       <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>https://gmagno.github.io/tags/wheels/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>about</title>
+      <link>https://gmagno.github.io/tags/about/</link>
+      <pubDate>Sun, 02 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://gmagno.github.io/tags/about/</guid>
       <description></description>
     </item>
     

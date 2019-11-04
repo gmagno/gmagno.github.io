@@ -1,15 +1,29 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Python on gmagno</title>
+    <title>python on gmagno</title>
     <link>https://gmagno.github.io/categories/python/</link>
-    <description>Recent content in Python on gmagno</description>
+    <description>Recent content in python on gmagno</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 27 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 03 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://gmagno.github.io/categories/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A quick look at fuel prices in Brazil</title>
+      <link>https://gmagno.github.io/2019/11/a-quick-look-at-fuel-prices-in-brazil/</link>
+      <pubDate>Sun, 03 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://gmagno.github.io/2019/11/a-quick-look-at-fuel-prices-in-brazil/</guid>
+      <description>On this post I share a link to a dashboard depicting the fuel prices thoughout the Brazil. The dataset used to generate the plots is provided by the brazillian government through ANP (Agência Nacional do Petróleo, Gás Natural e Biocombustíveis). Follows the link to the actual dashboard page: here.
+
+@jonathanborba
+   
+The dashboard is WIP and at the moment tries to address three questions:
+ How do fuel prices vary, in average, among distributors?</description>
+    </item>
     
     <item>
       <title>Building python wheels for many linux-es</title>
