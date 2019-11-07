@@ -17,8 +17,8 @@
       <pubDate>Sun, 03 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://gmagno.github.io/2019/11/a-quick-look-at-fuel-prices-in-brazil/</guid>
-      <description>On this post I share a link to a dashboard depicting the fuel prices thoughout Brazil. The dataset used to generate the plots is provided by the brazillian government through ANP (Agência Nacional do Petróleo, Gás Natural e Biocombustíveis). Follows the link to the actual dashboard page: here.
-
+      <description>On this post I share a link to a dashboard depicting the fuel prices thoughout Brazil. The dataset used to generate the plots is provided by the brazillian government through ANP (Agência Nacional do Petróleo, Gás Natural e Biocombustíveis).
+Fuel prices in Brazil 
 @jonathanborba
    
 The dashboard is WIP and at the moment tries to address three questions:
